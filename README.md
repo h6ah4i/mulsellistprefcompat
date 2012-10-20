@@ -1,4 +1,4 @@
-MultiSelectListPreferenceComat
+MultiSelectListPreferenceCompat
 ====================
 
 Backport MultiSelectListPreference class to older android devices.
