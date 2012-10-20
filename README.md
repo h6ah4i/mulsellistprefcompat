@@ -3,9 +3,9 @@ MultiSelectListPreferenceComat
 
 Backport MultiSelectListPreference class to older android devices.
 
-Originally MultiSelectListPreference was introduced to API level 11 (Honeycmb).
-And official compatibility library does not includes this class. 
-This library introduces compatible class for MultiSelectListPreference.
+Originally MultiSelectListPreference was introduced to API level 11 (Honeycomb).
+And official support package does not include this class. 
+This library introduces compatible class of MultiSelectListPreference.
 
 
 Usage
