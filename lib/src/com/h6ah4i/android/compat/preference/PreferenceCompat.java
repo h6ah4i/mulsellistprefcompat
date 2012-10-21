@@ -22,9 +22,6 @@ import android.os.Build;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 
-import com.h6ah4i.android.compat.internal.PreferenceCompatImpl;
-import com.h6ah4i.android.compat.internal.PreferenceCompatImplGB;
-import com.h6ah4i.android.compat.internal.PreferenceCompatImplHoneycomb;
 
 public final class PreferenceCompat {
     // private static final String TAG = "PreferenceCompat";

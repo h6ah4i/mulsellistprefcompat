@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.h6ah4i.android.compat.internal;
+package com.h6ah4i.android.compat.content;
 
 import java.util.Set;
 
 import android.content.SharedPreferences;
 
 /**
- * {@hide}
+ * @hide
  */
-public abstract class EditorCompatImpl {
+abstract class EditorCompatImpl {
     public abstract SharedPreferences.Editor putStringSet(
             SharedPreferences.Editor editor, String key, Set<String> values);
 }

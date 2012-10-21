@@ -14,20 +14,22 @@
  * limitations under the License.
  */
 
-package com.h6ah4i.android.compat.internal;
+package com.h6ah4i.android.compat.preference;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Set;
+
+import com.h6ah4i.android.compat.utils.SharedPreferencesJsonStringSetWrapperUtils;
 
 import android.preference.Preference;
 import android.util.Log;
 
 //Implementation for Gingerbread
 /**
- * {@hide}
+ * @hide
  */
-public class PreferenceCompatImplGB extends PreferenceCompatImpl {
+class PreferenceCompatImplGB extends PreferenceCompatImpl {
     private static final String TAG = "PreferenceCompatImplGB";
 
     private Method mShouldPersist;
@@ -66,7 +68,7 @@ public class PreferenceCompatImplGB extends PreferenceCompatImpl {
             return defaultReturnValue;
         }
 
-        return SharedPreferencesJsonStringSetWrapper.getStringSet(
+        return SharedPreferencesJsonStringSetWrapperUtils.getStringSet(
                 pref.getSharedPreferences(), pref.getKey(), defaultReturnValue);
     }
 
@@ -79,7 +81,7 @@ public class PreferenceCompatImplGB extends PreferenceCompatImpl {
                 return true;
             }
 
-            return SharedPreferencesJsonStringSetWrapper.putStringSet(
+            return SharedPreferencesJsonStringSetWrapperUtils.putStringSet(
                     pref.getEditor(), pref.getKey(), values);
         }
         return false;

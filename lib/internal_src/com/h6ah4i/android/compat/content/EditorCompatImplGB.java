@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-package com.h6ah4i.android.compat.internal;
+package com.h6ah4i.android.compat.content;
 
 import java.util.Set;
+
+import com.h6ah4i.android.compat.utils.SharedPreferencesJsonStringSetWrapperUtils;
 
 import android.content.SharedPreferences;
 
 //Implementation for Gingerbread
 /**
- * {@hide}
+ * @hide
  */
-public final class EditorCompatImplGB extends EditorCompatImpl {
+final class EditorCompatImplGB extends EditorCompatImpl {
     // private static final String TAG = "EditorCompatImplHoneycomb";
 
     @Override
     public SharedPreferences.Editor putStringSet(
             SharedPreferences.Editor editor, String key, Set<String> values) {
 
-        SharedPreferencesJsonStringSetWrapper.putStringSet(editor, key, values);
+        SharedPreferencesJsonStringSetWrapperUtils.putStringSet(editor, key, values);
 
         return editor;
     }

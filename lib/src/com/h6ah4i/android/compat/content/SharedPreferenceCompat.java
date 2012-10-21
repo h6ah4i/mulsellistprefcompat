@@ -22,12 +22,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Build;
 
-import com.h6ah4i.android.compat.internal.EditorCompatImpl;
-import com.h6ah4i.android.compat.internal.EditorCompatImplGB;
-import com.h6ah4i.android.compat.internal.EditorCompatImplHoneycomb;
-import com.h6ah4i.android.compat.internal.SharedPreferencesCompatImpl;
-import com.h6ah4i.android.compat.internal.SharedPreferencesCompatImplGB;
-import com.h6ah4i.android.compat.internal.SharedPreferencesCompatImplHoneycomb;
 
 public final class SharedPreferenceCompat {
     // private static final String TAG = "SharedPreferencesCompat";

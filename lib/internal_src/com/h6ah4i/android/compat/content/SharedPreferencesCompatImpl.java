@@ -14,22 +14,16 @@
  * limitations under the License.
  */
 
-package com.h6ah4i.android.compat.internal;
+package com.h6ah4i.android.compat.content;
 
 import java.util.Set;
 
 import android.content.SharedPreferences;
 
-// Implementation for Gingerbread
 /**
- * {@hide}
+ * @hide
  */
-public final class SharedPreferencesCompatImplGB extends SharedPreferencesCompatImpl {
-    // private static final String TAG = "SharedPreferenceCompatImplGB";
-
-    @Override
-    public Set<String> getStringSet(
-            SharedPreferences prefs, String key, Set<String> defaultReturnValue) {
-        return SharedPreferencesJsonStringSetWrapper.getStringSet(prefs, key, defaultReturnValue);
-    }
+abstract class SharedPreferencesCompatImpl {
+    public abstract Set<String> getStringSet(
+            SharedPreferences prefs, String key, Set<String> defValues);
 }

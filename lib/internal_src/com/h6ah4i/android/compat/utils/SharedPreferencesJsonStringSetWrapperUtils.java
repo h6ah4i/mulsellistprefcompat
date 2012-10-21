@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.h6ah4i.android.compat.internal;
+package com.h6ah4i.android.compat.utils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,10 +26,10 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 /**
- * {@hide}
+ * @hide
  */
-public final class SharedPreferencesJsonStringSetWrapper {
-    private static final String TAG = "SharedPreferencesJsonStringSetWrapper";
+public final class SharedPreferencesJsonStringSetWrapperUtils {
+    private static final String TAG = "SharedPreferencesJsonStringSetWrapperUtils";
 
     // Original idea:
     // http://stackoverflow.com/questions/7361627/how-can-write-code-to-make-sharedpreferences-for-array-in-android

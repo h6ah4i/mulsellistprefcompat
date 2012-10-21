@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.h6ah4i.android.compat.internal;
+package com.h6ah4i.android.compat.preference;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -25,9 +25,9 @@ import android.util.Log;
 
 // Implementation for Honeycomb or later
 /**
- * {@hide}
+ * @hide
  */
-public class PreferenceCompatImplHoneycomb extends PreferenceCompatImpl {
+class PreferenceCompatImplHoneycomb extends PreferenceCompatImpl {
     private static final String TAG = "PreferenceCompatImplHoneycomb";
 
     private Method mGetPersistedStringSet;

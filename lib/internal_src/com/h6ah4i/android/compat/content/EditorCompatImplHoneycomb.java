@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.h6ah4i.android.compat.internal;
+package com.h6ah4i.android.compat.content;
 
 import java.util.Set;
 
@@ -23,10 +23,10 @@ import android.content.SharedPreferences;
 
 // Implementation for Honeycomb or later
 /**
- * {@hide}
+ * @hide
  */
 @TargetApi(11)
-public final class EditorCompatImplHoneycomb extends EditorCompatImpl {
+final class EditorCompatImplHoneycomb extends EditorCompatImpl {
     // private static final String TAG = "EditorCompatImplHoneycomb";
 
     @Override

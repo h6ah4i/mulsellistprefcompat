@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package com.h6ah4i.android.compat.internal;
+package com.h6ah4i.android.compat.preference;
 
 import java.util.Set;
 
-import android.content.SharedPreferences;
+import android.preference.Preference;
 
 /**
- * {@hide}
+ * @hide
  */
-public abstract class SharedPreferencesCompatImpl {
-    public abstract Set<String> getStringSet(
-            SharedPreferences prefs, String key, Set<String> defValues);
+abstract class PreferenceCompatImpl {
+    public abstract Set<String> getPersistedStringSet(
+            Preference pref, Set<String> defaultReturnValue);
+
+    public abstract boolean persistStringSet(Preference pref, Set<String> values);
 }
