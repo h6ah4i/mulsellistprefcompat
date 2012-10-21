@@ -16,30 +16,71 @@
 
 package com.example.multiselectlistpreferencecompatexample;
 
-import com.example.multiselectlistpreferencecompat.R;
+import java.util.HashSet;
+import java.util.Set;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-public class MainActivity extends Activity {
+import com.example.multiselectlistpreferencecompat.R;
+import com.h6ah4i.android.compat.content.SharedPreferenceCompat;
+
+public class MainActivity
+        extends Activity
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+    // fields
+    private String mKeyText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = (Button) findViewById(R.id.settings_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        mKeyText = getText(R.string.prefs_key_text).toString();
+
+        // apply default preference values
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
+
+        // make launcher button
+        final Button launchButton = (Button) findViewById(R.id.settings_button);
+        launchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launchPreferenceActivity();
             }
         });
+
+        // make toggle button
+        final Button toggleButton = (Button) findViewById(R.id.toggle_button);
+        toggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleSettingValues();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCurrentSettingsText();
+        getPrefs().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        getPrefs().unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
     }
 
     @Override
@@ -59,8 +100,62 @@ public class MainActivity extends Activity {
         return true;
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        updateCurrentSettingsText();
+    }
+
+    private SharedPreferences getPrefs() {
+        return PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    private void updateCurrentSettingsText() {
+        // ex. SharedPreferenceCompat.getStringSet()
+        final SharedPreferences prefs = getPrefs();
+        final Set<String> values =
+                SharedPreferenceCompat.getStringSet(prefs, mKeyText, null);
+
+        if (values == null)
+            return;
+
+        final TextView text = (TextView) findViewById(R.id.text_settings_values);
+        text.setText(Utils.sortedToString(values));
+    }
+
     private void launchPreferenceActivity() {
         final Intent intent = new Intent(this, MainPreferenceActivity.class);
         startActivity(intent);
+    }
+
+    private void toggleSettingValues() {
+        // ex. SharedPreferenceCompat.getStringSet()
+        final SharedPreferences prefs = getPrefs();
+        final Set<String> values =
+                SharedPreferenceCompat.getStringSet(prefs, mKeyText, null);
+
+        if (values == null)
+            return;
+
+        final Set<String> toggledValues = new HashSet<String>();
+
+        final String[] allValues = getResources().getStringArray(
+                R.array.multisellistperf_entryValues);
+
+        for (String value : allValues) {
+            if (!values.contains(value)) {
+                toggledValues.add(value);
+            }
+        }
+
+        // ex. SharedPreferenceCompat.EditorCompat.putStringSet()
+        // SharedPreferenceCompat.EditorCompat
+        // .putStringSet(prefs.edit(), mKeyText, toggledValues)
+        // .commit();
+
+        // ex. SharedPreferenceCompat.EditorCompatWrapper
+        final SharedPreferenceCompat.EditorCompatWrapper wrappedEditor =
+                new SharedPreferenceCompat.EditorCompatWrapper(prefs.edit());
+
+        wrappedEditor.putStringSet(mKeyText, toggledValues).commit();
     }
 }

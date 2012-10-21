@@ -22,17 +22,34 @@
         android:id="@+id/hello_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/settings_button"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_marginBottom="10dp"
         android:text="@string/hello_world" />
 
     <Button
         android:id="@+id/settings_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/hello_text"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/settings_button" />
+
+    <TextView
+        android:id="@+id/text_settings_values"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settings_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/toggle_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_settings_values"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="@string/launch_settings_button" />
+        android:text="@string/toggle_button" />
 
 </RelativeLayout>

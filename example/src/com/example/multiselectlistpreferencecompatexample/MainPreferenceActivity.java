@@ -16,7 +16,6 @@
 
 package com.example.multiselectlistpreferencecompatexample;
 
-import java.util.Arrays;
 import java.util.Set;
 
 import android.os.Bundle;
@@ -26,9 +25,13 @@ import android.preference.PreferenceActivity;
 import com.example.multiselectlistpreferencecompat.R;
 import com.h6ah4i.android.compat.preference.MultiSelectListPreferenceCompat;
 
-public class MainPreferenceActivity extends PreferenceActivity implements
-        Preference.OnPreferenceChangeListener {
+public class MainPreferenceActivity
+        extends PreferenceActivity
+        implements Preference.OnPreferenceChangeListener {
+
+    // fields
     private String mOrigSummaryText;
+    private String mKeyText;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -36,7 +39,10 @@ public class MainPreferenceActivity extends PreferenceActivity implements
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
 
-        final MultiSelectListPreferenceCompat multiselpref = (MultiSelectListPreferenceCompat) findPreference("key_text");
+        mKeyText = getText(R.string.prefs_key_text).toString();
+
+        // ex. MultiSelectListPreferenceCompat
+        final MultiSelectListPreferenceCompat multiselpref = (MultiSelectListPreferenceCompat) findPreference(mKeyText);
         multiselpref.setOnPreferenceChangeListener(this);
 
         mOrigSummaryText = multiselpref.getSummary().toString();
@@ -46,7 +52,7 @@ public class MainPreferenceActivity extends PreferenceActivity implements
     @SuppressWarnings("unchecked")
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final String key = preference.getKey();
-        if (key.equals("key_text")) {
+        if (key.equals(mKeyText)) {
             final MultiSelectListPreferenceCompat multiselpref = (MultiSelectListPreferenceCompat) preference;
 
             multiselpref.setSummary(makeSummaryText(mOrigSummaryText, (Set<String>) newValue));
@@ -58,22 +64,6 @@ public class MainPreferenceActivity extends PreferenceActivity implements
     }
 
     public static String makeSummaryText(String baseText, Set<String> values) {
-        // sort items
-        String[] sorted = new String[values.size()];
-        values.toArray(sorted);
-        Arrays.sort(sorted);
-        
-        StringBuilder builder = new StringBuilder();
-        builder.append("[");
-        for (int i = 0; i < sorted.length; i++) {
-            if (i > 0)
-                builder.append(", ");
-            
-            builder.append(sorted[i]);
-        }
-        builder.append("]");
-        
-        return baseText + " " + builder.toString();
+        return baseText + " " + Utils.sortedToString(values);
     }
-
 }

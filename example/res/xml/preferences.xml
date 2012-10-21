@@ -13,7 +13,7 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License. 
- -->
+-->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
@@ -21,8 +21,8 @@
         android:defaultValue="@array/multisellistperf_defvalues"
         android:entries="@array/multisellistperf_entries"
         android:entryValues="@array/multisellistperf_entryValues"
-        android:key="key_text"
-        android:summary="summary_text"
-        android:title="title_text" />
+        android:key="@string/prefs_key_text"
+        android:summary="@string/prefs_summary_text"
+        android:title="@string/prefs_title_text" />
 
 </PreferenceScreen>
