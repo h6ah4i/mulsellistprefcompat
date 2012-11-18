@@ -20,12 +20,13 @@ import java.util.Set;
 
 import android.annotation.TargetApi;
 import android.content.SharedPreferences;
+import android.os.Build;
 
 //Implementation for Honeycomb or later
 /**
  * @hide
  */
-@TargetApi(11)
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 final class SharedPreferencesCompatImplHoneycomb
         extends SharedPreferencesCompatImpl {
     // private static final String TAG = "SharedPreferenceCompatImplHoneycomb";
