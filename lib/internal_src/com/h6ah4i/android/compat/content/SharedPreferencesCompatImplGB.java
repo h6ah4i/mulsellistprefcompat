@@ -31,7 +31,7 @@ final class SharedPreferencesCompatImplGB extends SharedPreferencesCompatImpl {
 
     @Override
     public Set<String> getStringSet(
-            SharedPreferences prefs, String key, Set<String> defaultReturnValue) {
-        return SharedPreferencesJsonStringSetWrapperUtils.getStringSet(prefs, key, defaultReturnValue);
+            SharedPreferences prefs, String key, Set<String> defValues) {
+        return SharedPreferencesJsonStringSetWrapperUtils.getStringSet(prefs, key, defValues);
     }
 }

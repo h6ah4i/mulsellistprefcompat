@@ -18,15 +18,21 @@ package com.h6ah4i.android.compat.preference;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.Set;
 
+import android.annotation.TargetApi;
+import android.content.SharedPreferences;
 import android.preference.Preference;
 import android.util.Log;
+
+import com.h6ah4i.android.compat.utils.SharedPreferencesJsonStringSetWrapperUtils;
 
 // Implementation for Honeycomb or later
 /**
  * @hide
  */
+@TargetApi(11)
 class PreferenceCompatImplHoneycomb extends PreferenceCompatImpl {
     private static final String TAG = "PreferenceCompatImplHoneycomb";
 
@@ -38,6 +44,8 @@ class PreferenceCompatImplHoneycomb extends PreferenceCompatImpl {
     public Set<String> getPersistedStringSet(
             Preference pref, Set<String> defaultReturnValue) {
         try {
+            checkAndUpgradeToNativeStringSet(pref.getSharedPreferences(), pref.getKey());
+
             synchronized (this) {
                 if (mGetPersistedStringSet == null) {
                     mGetPersistedStringSet = Preference.class.getDeclaredMethod(
@@ -48,15 +56,15 @@ class PreferenceCompatImplHoneycomb extends PreferenceCompatImpl {
 
             return (Set<String>) (mGetPersistedStringSet.invoke(pref, defaultReturnValue));
         } catch (NoSuchMethodException e) {
-            Log.e(TAG, "getPersistedStringSetCompat", e);
+            Log.e(TAG, "getPersistedStringSet", e);
         } catch (IllegalArgumentException e) {
-            Log.e(TAG, "getPersistedStringSetCompat", e);
+            Log.e(TAG, "getPersistedStringSet", e);
         } catch (IllegalAccessException e) {
-            Log.e(TAG, "getPersistedStringSetCompat", e);
+            Log.e(TAG, "getPersistedStringSet", e);
         } catch (InvocationTargetException e) {
-            Log.e(TAG, "getPersistedStringSetCompat", e);
+            Log.e(TAG, "getPersistedStringSet", e);
         } catch (RuntimeException e) {
-            Log.e(TAG, "getPersistedStringSetCompat", e);
+            Log.e(TAG, "getPersistedStringSet", e);
         }
 
         return defaultReturnValue;
@@ -65,6 +73,8 @@ class PreferenceCompatImplHoneycomb extends PreferenceCompatImpl {
     @Override
     public boolean persistStringSet(Preference pref, Set<String> values) {
         try {
+            checkAndUpgradeToNativeStringSet(pref.getSharedPreferences(), pref.getKey());
+
             synchronized (this) {
                 if (mPersistStringSet == null) {
                     mPersistStringSet = Preference.class.getDeclaredMethod(
@@ -75,17 +85,43 @@ class PreferenceCompatImplHoneycomb extends PreferenceCompatImpl {
 
             return (Boolean) (mPersistStringSet.invoke(pref, values));
         } catch (NoSuchMethodException e) {
-            Log.e(TAG, "getPersistedStringSetCompat", e);
+            Log.e(TAG, "persistStringSet", e);
         } catch (IllegalArgumentException e) {
-            Log.e(TAG, "getPersistedStringSetCompat", e);
+            Log.e(TAG, "persistStringSet", e);
         } catch (IllegalAccessException e) {
-            Log.e(TAG, "getPersistedStringSetCompat", e);
+            Log.e(TAG, "persistStringSet", e);
         } catch (InvocationTargetException e) {
-            Log.e(TAG, "getPersistedStringSetCompat", e);
+            Log.e(TAG, "persistStringSet", e);
         } catch (RuntimeException e) {
-            Log.e(TAG, "getPersistedStringSetCompat", e);
+            Log.e(TAG, "persistStringSet", e);
         }
 
         return false;
+    }
+
+    public static void checkAndUpgradeToNativeStringSet(SharedPreferences prefs, String key) {
+        try {
+            // Do test whether the preference is String one
+            prefs.getString(key, null);
+
+            // Parse current values
+            Set<String> values =
+                    SharedPreferencesJsonStringSetWrapperUtils.getStringSet(
+                            prefs, key, null);
+
+            if (values == null) {
+                values = new HashSet<String>();
+            }
+
+            // Replace as Set<String> values
+            prefs.edit()
+                    .remove(key)
+                    .putStringSet(key, values)
+                    .apply();
+        } catch (ClassCastException e) {
+            return;
+        } catch (RuntimeException e) {
+            Log.e(TAG, "checkAndUpgradeToNativeStringSet", e);
+        }
     }
 }
