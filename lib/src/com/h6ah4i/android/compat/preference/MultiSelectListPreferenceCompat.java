@@ -36,7 +36,7 @@ import android.preference.DialogPreference;
 import android.preference.Preference;
 import android.util.AttributeSet;
 
-import com.example.multiselectlistpreferencecompat.R;
+import com.h6ah4i.android.multiselectlistpreferencecompat.R;
 
 /**
  * A {@link Preference} that displays a list of entries as a dialog.
