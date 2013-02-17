@@ -52,7 +52,7 @@ public class MultiSelectListPreferenceCompat extends DialogPreference {
     private CharSequence[] mEntries;
     private CharSequence[] mEntryValues;
     private Set<String> mValues = new HashSet<String>();
-    private Set<String> mNewValues = new HashSet<String>();
+    private Set<String> mNewValues;
     private boolean mPreferenceChanged;
 
     public MultiSelectListPreferenceCompat(Context context, AttributeSet attrs) {
@@ -153,7 +153,11 @@ public class MultiSelectListPreferenceCompat extends DialogPreference {
         mValues.clear();
         mValues.addAll(values);
 
-        persistStringSetCompat(values);
+        // we shouldn't re-use the hash set, because 
+        // persistStringSet() method does not copy the passed
+        // arguments.
+        final HashSet<String> clonedValues = new HashSet<String>(values);
+        persistStringSetCompat(clonedValues);
     }
 
     /**
@@ -190,7 +194,13 @@ public class MultiSelectListPreferenceCompat extends DialogPreference {
                             + "an entryValues array.");
         }
 
-        boolean[] checkedItems = getSelectedItems();
+        if (mNewValues == null) {
+            mNewValues = new HashSet<String>();
+            mNewValues.addAll(mValues);
+            mPreferenceChanged = false;
+        }
+        
+        final boolean[] checkedItems = getSelectedItems(mNewValues);
         builder.setMultiChoiceItems(mEntries, checkedItems,
                 new DialogInterface.OnMultiChoiceClickListener() {
                     public void onClick(DialogInterface dialog, int which,
@@ -204,14 +214,11 @@ public class MultiSelectListPreferenceCompat extends DialogPreference {
                         }
                     }
                 });
-        mNewValues.clear();
-        mNewValues.addAll(mValues);
     }
 
-    private boolean[] getSelectedItems() {
+    private boolean[] getSelectedItems(final Set<String> values) {
         final CharSequence[] entries = mEntryValues;
         final int entryCount = entries.length;
-        final Set<String> values = mValues;
         boolean[] result = new boolean[entryCount];
 
         for (int i = 0; i < entryCount; i++) {
@@ -231,6 +238,7 @@ public class MultiSelectListPreferenceCompat extends DialogPreference {
                 setValues(values);
             }
         }
+        mNewValues = null;
         mPreferenceChanged = false;
     }
 
@@ -257,34 +265,43 @@ public class MultiSelectListPreferenceCompat extends DialogPreference {
     @Override
     protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
-        if (isPersistent()) {
-            // No need to save instance state
-            return superState;
-        }
-
         final SavedState myState = new SavedState(superState);
-        myState.values = getValues();
+        myState.values = mValues;
+        myState.newValues = mNewValues;
+        myState.preferenceChanged = mPreferenceChanged;
         return myState;
     }
 
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof SavedState) {
+            final SavedState myState = (SavedState) state;
+            if (myState.values != null) {
+                mValues =  myState.values;
+            }
+            if (myState.newValues != null) {
+                mNewValues = myState.newValues;
+            }
+            mPreferenceChanged = myState.preferenceChanged;
+            
+            super.onRestoreInstanceState(myState.getSuperState());
+        } else {
+            super.onRestoreInstanceState(state);
+        }
+    }
+
     private static class SavedState extends BaseSavedState {
-        Set<String> values;
+        public Set<String> values;
+        public Set<String> newValues;
+        public boolean preferenceChanged;
 
         public SavedState(Parcel source) {
             super(source);
-            values = new HashSet<String>();
-            
-            final int n = source.readInt();
-            final String[] strings = new String[n];
-            
-            source.readStringArray(strings);
-            
-            final int stringCount = strings.length;
-            for (int i = 0; i < stringCount; i++) {
-                values.add(strings[i]);
-            }
+            values = readStringSet(source);
+            newValues = readStringSet(source);
+            preferenceChanged = readBoolean(source);
         }
-
+        
         public SavedState(Parcelable superState) {
             super(superState);
         }
@@ -293,11 +310,9 @@ public class MultiSelectListPreferenceCompat extends DialogPreference {
         public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             
-            final int n = values.size();
-            final String[] arrayValues = new String[n];
-            
-            dest.writeInt(n);
-            dest.writeStringArray(values.toArray(arrayValues));
+            writeStringSet(dest, values);
+            writeStringSet(dest, newValues);
+            writeBoolean(dest, preferenceChanged);
         }
 
         @SuppressWarnings("unused")
@@ -310,6 +325,41 @@ public class MultiSelectListPreferenceCompat extends DialogPreference {
                 return new SavedState[size];
             }
         };
+        
+        private static Set<String> readStringSet(Parcel source) {
+            final int n = source.readInt();
+            final String[] strings = new String[n];
+            final Set<String> values = new HashSet<String>(n);
+
+            source.readStringArray(strings);
+
+            final int stringCount = strings.length;
+            for (int i = 0; i < stringCount; i++) {
+                values.add(strings[i]);
+            }
+            
+            return values;
+        }
+        
+        private static void writeStringSet(Parcel dest, Set<String> values) {
+            final int n = (values == null) ? 0 : values.size();
+            final String[] arrayValues = new String[n];
+            
+            if (values != null) {
+                values.toArray(arrayValues);
+            }
+
+            dest.writeInt(n);
+            dest.writeStringArray(arrayValues);
+        }
+        
+        private static boolean readBoolean(Parcel source) {
+            return source.readInt() != 0;
+        }
+        
+        private static void writeBoolean(Parcel dest, boolean value) {
+            dest.writeInt((value) ? 1 : 0);
+        }
     }
 
     protected boolean persistStringSetCompat(Set<String> values) {
