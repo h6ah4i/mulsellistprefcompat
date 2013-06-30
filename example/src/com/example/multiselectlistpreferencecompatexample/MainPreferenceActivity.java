@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 
-import com.example.multiselectlistpreferencecompat.R;
 import com.h6ah4i.android.compat.preference.MultiSelectListPreferenceCompat;
 
 public class MainPreferenceActivity

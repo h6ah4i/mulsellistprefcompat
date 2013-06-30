@@ -18,9 +18,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <com.h6ah4i.android.compat.preference.MultiSelectListPreferenceCompat
-        android:defaultValue="@array/multisellistperf_defvalues"
-        android:entries="@array/multisellistperf_entries"
-        android:entryValues="@array/multisellistperf_entryValues"
+        android:defaultValue="@array/multisellistpref_defvalues"
+        android:entries="@array/multisellistpref_entries"
+        android:entryValues="@array/multisellistpref_entryValues"
         android:key="@string/prefs_key_text"
         android:summary="@string/prefs_summary_text"
         android:title="@string/prefs_title_text" />

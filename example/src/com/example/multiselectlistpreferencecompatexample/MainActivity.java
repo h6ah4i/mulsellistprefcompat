@@ -30,7 +30,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.multiselectlistpreferencecompat.R;
 import com.h6ah4i.android.compat.content.SharedPreferenceCompat;
 
 public class MainActivity
@@ -139,7 +138,7 @@ public class MainActivity
         final Set<String> toggledValues = new HashSet<String>();
 
         final String[] allValues = getResources().getStringArray(
-                R.array.multisellistperf_entryValues);
+                R.array.multisellistpref_entryValues);
 
         for (String value : allValues) {
             if (!values.contains(value)) {

@@ -17,14 +17,14 @@
  <resources>
 
     <!-- default value -->
-    <string-array name="multisellistperf_defvalues">
+    <string-array name="multisellistpref_defvalues">
         <item>item_1</item>
         <item>item_3</item>
         <item>item_5</item>
     </string-array>
 
     <!-- entry values -->
-    <string-array name="multisellistperf_entryValues">
+    <string-array name="multisellistpref_entryValues">
         <item>item_1</item>
         <item>item_2</item>
         <item>item_3</item>
@@ -34,7 +34,7 @@
     </string-array>
 
     <!-- entries -->
-    <string-array name="multisellistperf_entries">
+    <string-array name="multisellistpref_entries">
         <item>Item 1</item>
         <item>Item 2</item>
         <item>Item 3</item>
