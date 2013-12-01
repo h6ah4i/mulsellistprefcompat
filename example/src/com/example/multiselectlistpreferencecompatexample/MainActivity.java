@@ -16,6 +16,7 @@
 
 package com.example.multiselectlistpreferencecompatexample;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,9 +46,6 @@ public class MainActivity
         setContentView(R.layout.activity_main);
 
         mKeyText = getText(R.string.prefs_key_text).toString();
-
-        // apply default preference values
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
 
         // make launcher button
         final Button launchButton = (Button) findViewById(R.id.settings_button);
@@ -108,11 +106,19 @@ public class MainActivity
         return PreferenceManager.getDefaultSharedPreferences(this);
     }
 
+    private Set<String> getDefaultValues() {
+        final Set<String> defValues = new HashSet<String>();
+        defValues.addAll(Arrays.asList(
+                getResources().getStringArray(
+                        R.array.multisellistpref_defvalues)));
+        return defValues;
+    }
+
     private void updateCurrentSettingsText() {
         // ex. SharedPreferenceCompat.getStringSet()
         final SharedPreferences prefs = getPrefs();
         final Set<String> values =
-                SharedPreferenceCompat.getStringSet(prefs, mKeyText, null);
+                SharedPreferenceCompat.getStringSet(prefs, mKeyText, getDefaultValues());
 
         if (values == null)
             return;
@@ -130,7 +136,8 @@ public class MainActivity
         // ex. SharedPreferenceCompat.getStringSet()
         final SharedPreferences prefs = getPrefs();
         final Set<String> values =
-                SharedPreferenceCompat.getStringSet(prefs, mKeyText, null);
+                SharedPreferenceCompat.getStringSet(
+                        prefs, mKeyText, getDefaultValues());
 
         if (values == null)
             return;
