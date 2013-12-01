@@ -37,21 +37,27 @@ public final class SharedPreferencesJsonStringSetWrapperUtils {
     public static Set<String> getStringSet(
             SharedPreferences prefs, String key, Set<String> defaultReturnValue) {
         final String json = prefs.getString(key, null);
-        final Set<String> values = new HashSet<String>();
+        Set<String> values = null;
 
         if (json != null) {
             try {
                 final JSONArray a = new JSONArray(json);
                 for (int i = 0; i < a.length(); i++) {
                     final String value = a.optString(i);
+
+                    if (values == null) {
+                        values = new HashSet<String>();
+                    }
+
                     values.add(value);
                 }
             } catch (JSONException e) {
                 Log.e(TAG, "getStringSet", e);
+                values = null;
             }
         }
 
-        return values;
+        return (values != null) ? values : defaultReturnValue;
     }
 
     public static boolean putStringSet(

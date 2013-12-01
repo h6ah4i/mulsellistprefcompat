@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.compat.content;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import android.annotation.TargetApi;
@@ -51,19 +50,15 @@ final class SharedPreferencesCompatImplHoneycomb
             prefs.getString(key, null);
 
             // Parse current values
-            Set<String> values =
+            final Set<String> values =
                     SharedPreferencesJsonStringSetWrapperUtils.getStringSet(
                             prefs, key, null);
 
-            if (values == null) {
-                values = new HashSet<String>();
-            }
-
             // Replace as Set<String> values
-            prefs.edit()
-                    .remove(key)
-                    .putStringSet(key, values)
-                    .apply();
+            prefs.edit().remove(key).apply();
+            if (values != null) {
+                prefs.edit().putStringSet(key, values).apply();
+            }
         } catch (ClassCastException e) {
             return;
         } catch (RuntimeException e) {
