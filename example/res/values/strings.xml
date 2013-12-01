@@ -18,7 +18,7 @@
     <string name="app_name">MultiSelectListPreferenceCompatExample</string>
     <string name="hello_world">Hello MultiSelectListPrefereceCompat!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">MultiSelectListPrefereceCompat</string>
     <string name="settings_button">Open settings screen</string>
     <string name="toggle_button">Toggle setting values</string>
 
