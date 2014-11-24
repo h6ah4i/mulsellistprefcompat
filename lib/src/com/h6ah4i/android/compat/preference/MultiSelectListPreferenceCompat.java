@@ -64,15 +64,10 @@ public class MultiSelectListPreferenceCompat extends DialogPreference {
         final int n = a.getIndexCount();
         for (int i = 0; i < n; i++) {
             final int index = a.getIndex(i);
-            switch (index) {
-                case R.styleable.MultiSelectListPreferenceCompat_android_entries:
-                    mEntries = a.getTextArray(index);
-                    break;
-                case R.styleable.MultiSelectListPreferenceCompat_android_entryValues:
-                    mEntryValues = a.getTextArray(index);
-                    break;
-                default:
-                    break;
+            if (index == R.styleable.MultiSelectListPreferenceCompat_android_entries) {
+                mEntries = a.getTextArray(index);
+            } else if (index == R.styleable.MultiSelectListPreferenceCompat_android_entryValues) {
+                mEntryValues = a.getTextArray(index);
             }
         }
         a.recycle();
