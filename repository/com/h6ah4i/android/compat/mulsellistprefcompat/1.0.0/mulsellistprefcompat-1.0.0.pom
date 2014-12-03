@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.h6ah4i.android.compat</groupId>
+  <artifactId>mulsellistprefcompat</artifactId>
+  <version>1.0.0</version>
+  <packaging>aar</packaging>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>MultiSelectListPreferenceCompat</comments>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>h6ah4i</id>
+      <name>Haruki Hasegawa</name>
+    </developer>
+  </developers>
+  <scm>
+    <connection>git:https://github.com/h6ah4i/mulsellistprefcompat.git</connection>
+    <developerConnection>git:git@github.com:h6ah4i/mulsellistprefcompat.git</developerConnection>
+    <url>https://github.com/h6ah4i/mulsellistprefcompat</url>
+  </scm>
+</project>
