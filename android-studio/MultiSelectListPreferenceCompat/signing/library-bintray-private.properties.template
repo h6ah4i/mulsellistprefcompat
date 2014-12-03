@@ -1,0 +1,5 @@
+# This is a template file of "library-bintray-private.properties.properties"
+# These information are used to sign library JAR and POM files
+BINTRAY_USER=
+BINTRAY_API_KEY=
+BINTRAY_GPG_PASSPHRASE=

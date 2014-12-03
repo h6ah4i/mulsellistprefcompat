@@ -1,0 +1,81 @@
+/*
+ *    Copyright (C) 2014 Haruki Hasegawa
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+ // Declare these properties in project's extension
+ // - ext.bintrayDataFile = [path to data properties file]
+ // - ext.bintrayPrivateDataFile = [path to private info properties file]
+
+def dataProps = new Properties()
+def privateProps = new Properties()
+
+def dataFile = project.file(project.bintrayDataFile)
+def privateFile = project.file(project.bintrayPrivateDataFile)
+
+dataProps.load(dataFile.newDataInputStream())
+
+if (privateFile.exists()) {
+    privateProps.load(privateFile.newDataInputStream())
+}
+
+bintray {
+    user = privateProps.BINTRAY_USER
+    key = privateProps.BINTRAY_API_KEY
+
+//    configurations = ['deployables'] //When uploading configuration files
+    // - OR -
+    publications = ['mavenStuff'] //When uploading Maven-based publication files
+    // - AND/OR -
+//    filesSpec { //When uploading any arbitrary files ('filesSpec' is a standard Gradle CopySpec)
+//    from 'arbitrary-files'
+//    into 'standalone_files/level1'
+//    rename '(.+)\\.(.+)', '$1-suffix.$2'
+//    }
+
+    dryRun = dataProps.BINTRAY_DRY_RUN.toBoolean()
+    publish = dataProps.BINTRAY_PUBLISH.toBoolean()
+
+    pkg {
+        repo = dataProps.BINTRAY_PKG_REPO
+        userOrg = dataProps.BINTRAY_PKG_USER_ORG
+        name = dataProps.BINTRAY_PKG_NAME
+        desc = dataProps.BINTRAY_PKG_DESC
+        websiteUrl = dataProps.BINTRAY_PKG_WEBSITE_URL
+        issueTrackerUrl = dataProps.BINTRAY_PKG_ISSUE_TRACKER_URL
+        vcsUrl = dataProps.BINTRAY_PKG_VCS_URL
+        licenses = evaluate(dataProps.BINTRAY_PKG_LICENSES)
+        labels = evaluate(dataProps.BINTRAY_PKG_LABELS)
+        publicDownloadNumbers = dataProps.BINTRAY_PKG_PUBLIC_DOWNLOAD_NUMBERS.toBoolean()
+        // attributes =
+
+        // Optional version descriptor
+        version {
+            name = dataProps.VERSION_NAME
+            vcsTag = 'release-' + dataProps.VERSION_NAME
+
+            // released  =
+            // attributes =
+
+            gpg {
+                sign = (privateProps.BINTRAY_GPG_PASSPHRASE != null)
+                passphrase = privateProps.BINTRAY_GPG_PASSPHRASE
+            }
+
+            mavenCentralSync {
+                sync = false
+            }
+        }
+    }
+}

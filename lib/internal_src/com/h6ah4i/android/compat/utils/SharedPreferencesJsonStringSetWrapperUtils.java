@@ -25,9 +25,6 @@ import org.json.JSONException;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-/**
- * @hide
- */
 public final class SharedPreferencesJsonStringSetWrapperUtils {
     private static final String TAG = "SharedPreferencesJsonStringSetWrapperUtils";
 

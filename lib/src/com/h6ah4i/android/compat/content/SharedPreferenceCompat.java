@@ -43,10 +43,10 @@ public final class SharedPreferenceCompat {
 
     /**
      * Retrieve a set of String values from the preferences.
-     * 
+     *
      * @param prefs SharedPreferences to attempts to get a set of Strings.
      * @param key The name of the preference to retrieve.
-     * @param defValues Values to return if this preference does not exist.
+     * @param defaultReturnValue Values to return if this preference does not exist.
      * @return Returns the preference values if they exist, or defValues. Throws
      *         ClassCastException if there is a preference with this name that
      *         is not a Set.
@@ -78,9 +78,9 @@ public final class SharedPreferenceCompat {
 
         /**
          * Set a set of String values in the preferences editor, to be written
-         * back once {@link #commit} is called.
-         * 
-         * @param Editor to attempts to put set of Strings.
+         * back once SharedPreferences.Editor.commit() is called.
+         *
+         * @param editor Editor to attempts to put set of Strings.
          * @param key The name of the preference to modify.
          * @param values The new values for the preference.
          * @return Returns a reference to the same Editor object, so you can

@@ -47,9 +47,9 @@ public final class PreferenceCompat {
      * <p>
      * This will check if this Preference is persistent, get the
      * SharedPreferences from the {@link PreferenceManager}, and get the value.
-     * 
+     *
      * @param pref Preference to attempts to get a persisted set of Strings.
-     * @param defaultReturnValue The default value to return if either the
+     * @param values The default value to return if either the
      *            Preference is not persistent or the Preference is not in the
      *            shared preferences.
      * @return The value from the SharedPreferences or the default return value.
@@ -64,7 +64,7 @@ public final class PreferenceCompat {
      * <p>
      * This will check if this Preference is persistent, get the
      * SharedPreferences from the {@link PreferenceManager}, and get the value.
-     * 
+     *
      * @param pref Preference to attempts to get a persisted set of Strings.
      * @param defaultReturnValue The default value to return if either the
      *            Preference is not persistent or the Preference is not in the
