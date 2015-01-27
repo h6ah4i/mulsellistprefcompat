@@ -7,6 +7,8 @@ Originally MultiSelectListPreference was introduced to API level 11 (Honeycomb).
 And official support package does not include this class.
 This library introduces compatible class of MultiSelectListPreference.
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MultiSelectListPreferenceCompat-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1435)
+
 
 Setup
 ---
