@@ -25,7 +25,7 @@ dependencies {
 Usage
 ---
 
-Simply replace `MultiSelectListPreference` to `com.h6ah4i.android.compat.preference.MultiSelectListPreferenceCopmat`.
+Simply replace `MultiSelectListPreference` to `com.h6ah4i.android.compat.preference.MultiSelectListPreferenceCompat`.
 
 ```xml
 <MultiSelectListPreference ~~~ />
