@@ -17,29 +17,23 @@
 apply plugin: 'com.android.library'
 
 ext {
-    projectBasePath = file('../../../lib').absolutePath
-
     // required for 'android-maven-publish.gradle'
     mavenPublishDestDir = new File(rootDir, "repository").absolutePath
     mavenPublishDataFile = file('./library-data.properties').absolutePath
     mavenPublishSigningSetting =  file('../signing/library-maven-publish-signing.properties').absolutePath
 
-    // requred for 'bintray-upload.gradle'
+    // required for 'bintray-upload.gradle'
     bintrayDataFile = file('./library-data.properties').absolutePath
     bintrayPrivateDataFile = file('../signing/library-bintray-private.properties').absolutePath
 }
 
 // Common configurations
 apply from: '../common/android-set-common-properties.gradle'
-apply from: '../common/android-use-legacy-layout-files.gradle'
-
-// Use eclipse style project files layout
-useLegacyLayoutFiles(android.sourceSets.main, projectBasePath)
 
 android {
     defaultConfig {
         minSdkVersion 10
-        targetSdkVersion 21
+        targetSdkVersion 25
 
         def dataProps = new Properties()
         dataProps.load(project.file(project.mavenPublishDataFile).newDataInputStream())
@@ -48,9 +42,10 @@ android {
         versionName dataProps.VERSION_NAME
     }
 
+
     sourceSets {
         main {
-            java.srcDirs += (new File(projectBasePath, 'internal_src')).getPath()
+            java.srcDirs += (new File('./src/main/internal_java')).getPath()
         }
     }
 

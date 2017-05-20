@@ -16,23 +16,15 @@
 
 apply plugin: 'com.android.application'
 
-ext {
-    projectBasePath = file('../../../example').absolutePath
-}
-
 // Common configurations
 apply from: '../common/android-set-common-properties.gradle'
-apply from: '../common/android-use-legacy-layout-files.gradle'
 apply from: '../common/android-signing-utils.gradle'
-
-// Use eclipse style project files layout
-useLegacyLayoutFiles(android.sourceSets.main, projectBasePath)
 
 android {
     defaultConfig {
         applicationId "com.example.multiselectlistpreferencecompatexample"
         minSdkVersion 10
-        targetSdkVersion 21
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0.0"
     }
