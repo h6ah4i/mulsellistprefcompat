@@ -14,13 +14,7 @@
    limitations under the License. 
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.multiselectlistpreferencecompatexample"
-    android:versionCode="1"
-    android:versionName="1.0" >
-
-    <uses-sdk
-        android:minSdkVersion="10"
-        android:targetSdkVersion="21" />
+    package="com.example.multiselectlistpreferencecompatexample">
 
     <application
         android:icon="@drawable/ic_launcher"
